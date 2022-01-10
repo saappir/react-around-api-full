@@ -16,7 +16,7 @@ const errorHandler = (err, res) => {
     ERROR_CODE = 500;
     res.status(ERROR_CODE).send({ message: 'An error has occurred on the server' });
   }
-  console.log(err.name, err.message);
+  // console.log(err.name, err.message);
 };
 
 module.exports = errorHandler;
