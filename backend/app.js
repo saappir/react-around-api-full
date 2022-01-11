@@ -26,11 +26,11 @@ const limiter = rateLimit({
   message: 'rate limit reached',
 });
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 app.use(cors());
 app.options('*', cors());
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(helmet());
 app.use(limiter);
