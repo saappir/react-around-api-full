@@ -10,6 +10,8 @@ const { createUser } = require('./controllers/users');
 const auth = require('./middleware/auth');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 
+require('dotenv').config();
+
 const { PORT = 3000 } = process.env;
 const app = express();
 
