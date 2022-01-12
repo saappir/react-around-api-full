@@ -30,6 +30,22 @@ const limiter = rateLimit({
 
 app.use(cors());
 app.options('*', cors());
+app.use((req, res, next) => {
+  res.setHeader(
+    'Access-Control-Allow-Origin',
+    'https://saappir.students.nomoreparties.sbs/',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Methdos',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Rewuested-With,content-type',
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
