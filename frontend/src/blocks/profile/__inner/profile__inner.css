@@ -1,0 +1,14 @@
+.profile__inner {
+  display: flex;
+  flex-flow: nowrap row;
+  align-self: center;
+  gap: 18px;
+  margin: 0 0 16px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__inner {
+    gap: 10px;
+    margin: 26px 0 14px;
+  }
+}

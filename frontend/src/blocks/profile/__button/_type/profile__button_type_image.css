@@ -1,0 +1,19 @@
+.profile__button_type_image {
+  opacity: 0;
+  width: 120px;
+  height: 120px;
+  border: none;
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: url('../../../../images/icons/pencil.svg') no-repeat rgba(0, 0, 0, 0.8);
+  background-position: center;
+  background-size: 26px;
+}
+
+.profile__button_type_image:hover {
+  opacity: 1;
+}

@@ -3,6 +3,8 @@ logs
 *.log
 npm-debug.log*
 
+/.editorconfig
+
 # Dependency directory
 node_modules
 
@@ -12,4 +14,4 @@ node_modules
 # System files and IDE settings folders
 .DS_Store
 .idea
-.vscode 
+.vscode

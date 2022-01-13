@@ -1,0 +1,25 @@
+.homepage__submit {
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  background-color: white;
+  border: none;
+  color: black;
+  width: 358px;
+  margin-bottom: 15px;
+  padding: 14px 0;
+}
+
+.homepage__submit:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+@media screen and (max-width:580px) {
+  .homepage__submit {
+    font-size: 16px;
+    line-height: 19px;
+    width: 260px;
+  }
+}

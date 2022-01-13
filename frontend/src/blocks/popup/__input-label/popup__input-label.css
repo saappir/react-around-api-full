@@ -1,0 +1,20 @@
+.popup__input-label {
+  display: flex;
+  flex-flow: column nowrap;
+  position: relative;
+}
+
+.popup__input-label:first-of-type {
+  margin-top: 16px;
+  margin-bottom: 30px;
+}
+
+.popup__input-label:last-of-type {
+  margin-bottom: 48px;
+}
+
+@media screen and (max-width: 580px) {
+  .popup__input-label:last-of-type {
+    margin-bottom: 46px;
+  }
+}

@@ -1,0 +1,17 @@
+.homepage__input {
+  border-bottom: 2px solid #CCCCCC;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  font-size: 14px;
+  line-height: 17px;
+  padding-bottom: 13px;
+  background-color: transparent;
+  width: 358px;
+  color: white;
+}
+
+.homepage__input:focus {
+  outline: solid 2px rgba(30, 144, 255, 0.8);
+  border-bottom: none;
+}

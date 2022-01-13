@@ -1,0 +1,19 @@
+.homepage {
+  background-color: transparent;
+  box-sizing: border-box;
+  width: 358px;
+  max-width: 100%;
+  color: white;
+  margin-top: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (max-width:580px) {
+  .homepage {
+    width: 215px;
+  }
+}

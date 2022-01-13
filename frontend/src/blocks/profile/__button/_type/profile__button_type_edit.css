@@ -1,0 +1,16 @@
+.profile__button_type_edit {
+  background: url('../../../../images/icons/pencil.svg') no-repeat;
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  border: 1px solid white;
+}
+
+
+@media screen and (max-width: 768px) {
+  .profile__button_type_edit {
+    width: 18px;
+    height: 18px;
+    background-size: 7.5px;
+  }
+}
