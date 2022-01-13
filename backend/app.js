@@ -33,7 +33,7 @@ app.options('*', cors());
 app.use((req, res, next) => {
   res.setHeader(
     'Access-Control-Allow-Origin',
-    'https://saappir.students.nomoreparties.sbs/',
+    'https://saappir.students.nomoreparties.sbs',
   );
   res.setHeader(
     'Access-Control-Allow-Methdos',
@@ -41,7 +41,7 @@ app.use((req, res, next) => {
   );
   res.setHeader(
     'Access-Control-Allow-Headers',
-    'X-Rewuested-With,content-type',
+    'X-Requested-With,content-type',
   );
   res.setHeader('Access-Control-Allow-Credentials', true);
   next();
@@ -72,4 +72,3 @@ app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`App listening at port ${PORT}`);
 });
-
