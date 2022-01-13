@@ -12,7 +12,7 @@ const { requestLogger, errorLogger } = require('./middleware/logger');
 
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3000 || process.env.PORT } = process.env;
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/aroundb');
