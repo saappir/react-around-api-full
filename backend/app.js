@@ -59,9 +59,10 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.use(requestLogger);
 app.post('/signin', login);
 app.post('/signup', createUser);
+
+app.use(requestLogger);
 app.use('/', auth, usersRouter);
 app.use('/', auth, cardsRouter);
 
