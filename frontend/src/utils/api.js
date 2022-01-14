@@ -63,7 +63,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://api.saappir.students.nomoreparties.sbs",
+  baseUrl: 'http://localhost:3000/',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',
