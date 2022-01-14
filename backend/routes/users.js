@@ -9,7 +9,7 @@ const {
 usersRouter.get('/users', getUsers);
 
 usersRouter.get(
-  '/users/me',
+  '/me',
   celebrate({
     headers: Joi.object().keys({
       authorization: Joi.string().required(),
@@ -19,7 +19,7 @@ usersRouter.get(
 );
 
 usersRouter.get(
-  '/users/:userId',
+  '/:userId',
   celebrate({
     headers: Joi.object().keys({
       authorization: Joi.string().required(),
@@ -29,7 +29,7 @@ usersRouter.get(
 );
 
 usersRouter.patch(
-  '/users/me',
+  '/me',
   celebrate({
     headers: Joi.object().keys({
       authorization: Joi.string().required(),
@@ -43,7 +43,7 @@ usersRouter.patch(
 );
 
 usersRouter.patch(
-  '/users/me/avatar',
+  '/me/avatar',
   celebrate({
     headers: Joi.object().keys({
       authorization: Joi.string().required(),

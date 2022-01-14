@@ -17,6 +17,6 @@ module.exports = (req, res, next) => {
   } catch (err) {
     return res.status(403).send({ message: err });
   }
-  req.user = payload;
+  req.user = payload._id;
   next();
 };
