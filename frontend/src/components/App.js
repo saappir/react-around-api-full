@@ -35,21 +35,18 @@ function App() {
   const history = useHistory();
 
   React.useEffect(() => {
-    api.getUserinfo()
-      .then(setUserState)
-      .catch(error => console.error('user info error', error));
-  }, []);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then(setCardsArray)
-      .catch(error => console.error('initial cards error', error));
-  }, []);
-
-  React.useEffect(() => {
     tokenCheck();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
+
+  React.useEffect(() => {
+    api.getUserinfo()
+      .then(setUserState)
+      .catch(error => console.error('user info error', error));
+    api.getInitialCards()
+      .then(setCardsArray)
+      .catch(error => console.error('initial cards error', error));
+  }, [loggedIn]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
