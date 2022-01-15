@@ -34,7 +34,7 @@ app.options('*', cors());
 app.use((req, res, next) => {
   res.setHeader(
     'Access-Control-Allow-Origin',
-    'https://api.saappir.students.nomoreparties.sbs',
+    'https://saappir.students.nomoreparties.sbs',
   );
   res.setHeader(
     'Access-Control-Allow-Methdos',
