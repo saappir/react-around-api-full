@@ -40,12 +40,14 @@ function App() {
   }, [history]);
 
   React.useEffect(() => {
-    api.getUserinfo()
-      .then(setUserState)
-      .catch(error => console.error('user info error', error));
-    api.getInitialCards()
-      .then(setCardsArray)
-      .catch(error => console.error('initial cards error', error));
+    if (tokenCheck()) {
+      api.getUserinfo()
+        .then(setUserState)
+        .catch(error => console.error('user info error', error));
+      api.getInitialCards()
+        .then(setCardsArray)
+        .catch(error => console.error('initial cards error', error));
+    }
   }, [loggedIn]);
 
   const handleEditAvatarClick = () => {
