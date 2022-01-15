@@ -40,7 +40,8 @@ function App() {
   }, [history]);
 
   React.useEffect(() => {
-    if (tokenCheck()) {
+    const token = localStorage.getItem('token')
+    if (token) {
       api.getUserinfo()
         .then(setUserState)
         .catch(error => console.error('user info error', error));
