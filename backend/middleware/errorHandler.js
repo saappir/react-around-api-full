@@ -3,7 +3,7 @@ const errorHandler = (err, res) => {
   if (err.name === 'CastError') {
     ERROR_CODE = 400;
     res.status(ERROR_CODE).send({ message: err.message });
-  } else if (err.statusCode === 403) {
+  } else if (err.name === 'Forbidden') {
     ERROR_CODE = 403;
     res.status(ERROR_CODE).send({ message: 'Request forbidden, unauthorized' });
   } else if (err.statusCode === 404) {
