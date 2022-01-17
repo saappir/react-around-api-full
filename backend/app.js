@@ -32,10 +32,11 @@ const limiter = rateLimit({
 app.use(cors());
 app.options('*', cors());
 app.use((req, res, next) => {
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    'https://saappir.students.nomoreparties.sbs',
-  );
+  const allowedOrigins = ['http://localhost:3000', 'https://saappir.students.nomoreparties.sbs'];
+  const origin = req.headers;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader(
     'Access-Control-Allow-Methdos',
     'GET, POST, OPTIONS, PUT, PATCH, DELETE',
