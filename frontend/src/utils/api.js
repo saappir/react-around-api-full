@@ -10,18 +10,21 @@ class Api {
 
   getInitialCards() {
     return this._customFetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
       headers: this._headers
     })
   }
 
   getUserinfo() {
     return this._customFetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       headers: this._headers
     })
   }
 
   updateUserInfo(data) {
     return this._customFetch(`${this._baseUrl}/users/me`, {
+      credentials: 'include',
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
@@ -33,6 +36,7 @@ class Api {
 
   createCard(data) {
     return this._customFetch(`${this._baseUrl}/cards`, {
+      credentials: 'include',
       headers: this._headers,
       method: 'POST',
       body: JSON.stringify(data)
@@ -41,6 +45,7 @@ class Api {
 
   deleteCard(cardId) {
     return this._customFetch(`${this._baseUrl}/cards/${cardId}`, {
+      credentials: 'include',
       headers: this._headers,
       method: 'DELETE'
     })
@@ -48,6 +53,7 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked) {
     return this._customFetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      credentials: 'include',
       headers: this._headers,
       method: isLiked ? 'PUT' : 'DELETE'
     })
@@ -55,6 +61,7 @@ class Api {
 
   setUserAvatar({ avatar }) {
     return this._customFetch(`${this._baseUrl}/users/me/avatar`, {
+      credentials: 'include',
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({ avatar })
