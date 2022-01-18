@@ -86,4 +86,5 @@ app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`App listening at port ${PORT}`);
   console.log(process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : 'not-so-secret-string');
+  console.log(typeof process.env.JWT_SECRET);
 });
