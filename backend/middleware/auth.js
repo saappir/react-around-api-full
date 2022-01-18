@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   const token = authorization.replace('Bearer ', '');
   let payload;
   try {
-    payload = jwt.verify({ token }, NODE_ENV === 'production' ? JWT_SECRET : 'not-so-secret-string');
+    payload = jwt.verify(token.toString(), NODE_ENV === 'production' ? JWT_SECRET : 'not-so-secret-string');
   } catch (err) {
     return res.status(403).send({ message: err });
   }
