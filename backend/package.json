@@ -1,6 +1,6 @@
 {
   "name": "around-express",
-  "autohr": "saappir",
+  "author": "",
   "version": "1.0.0",
   "description": "`/data` — JSON files to temporarily emulate database integration.",
   "main": "app.js",
@@ -15,7 +15,6 @@
     "url": "git+https://github.com/saappir/around-express.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/saappir/around-express/issues"
