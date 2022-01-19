@@ -35,7 +35,6 @@ app.use((req, res, next) => {
   const allowedOrigins = ['http://localhost:3000', 'https://api.saappir.students.nomoreparties.sbs', 'https://saappir.students.nomoreparties.sbs'];
   const origin = req.headers;
   if (allowedOrigins.includes(origin)) {
-    console.log(allowedOrigins.includes(origin));
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
   res.setHeader(
