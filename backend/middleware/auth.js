@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
-console.log(JWT_SECRET);
+
 // eslint-disable-next-line consistent-return
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -16,6 +16,6 @@ module.exports = (req, res, next) => {
   } catch (err) {
     return res.status(403).send({ message: err });
   }
-  req.user = payload._id;
+  req.user = payload;
   next();
 };
