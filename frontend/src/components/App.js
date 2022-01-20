@@ -35,9 +35,9 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  useEffect(() => {
-    tokenCheck();
-  }, [token]);
+  //
+  //   tokenCheck();
+  // }, [token]);
 
   useEffect(() => {
     api.getUserinfo(token)
@@ -137,13 +137,12 @@ function App() {
       .finally(() => history.push('/'))
   }
 
-  const tokenCheck = () => {
+  useEffect(() => {
     if (token) {
       auth.getContent(token)
         .then((res) => {
           setEmail(res.data.email);
           setLoggedIn(true);
-          history.push('/');
         })
         .catch((error) => {
           if (error === 'Bad Request') {
@@ -154,10 +153,14 @@ function App() {
             console.error('500 - an error occured', error);
           }
         })
+        .finally(() => {
+          setIsInfoTooltipOpen(true);
+          history.push('/');
+        })
     } else {
       setLoggedIn(false);
     }
-  }
+  }, [history, token]);
 
   const handleLogout = () => {
     setEmail('')
