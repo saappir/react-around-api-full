@@ -35,9 +35,9 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  React.useEffect(() => {
-    tokenCheck();
-  });
+  // React.useEffect(() => {
+  //   tokenCheck();
+  // });
 
   React.useEffect(() => {
     if (token) {
