@@ -35,21 +35,44 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  //
-  //   tokenCheck();
-  // }, [token]);
-
   useEffect(() => {
     api.getUserinfo(token)
-      .then((res) => { setUserState(res.data) })
-      .catch(error => console.error('user info error', error));
-    api.getInitialCards(token)
       .then((res) => {
-        if (res.data) {
-          setCardsArray(res.data)
-        }
+        setUserState(res.data);
+        api.getInitialCards(token)
+          .then((res) => {
+            if (res.data) {
+              setCardsArray(res.data)
+            }
+          })
+          .catch(error => console.error('initial cards error', error));
       })
-      .catch(error => console.error('initial cards error', error));
+      .catch(error => console.error('user info error', error));
+  }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      auth.getContent(token)
+        .then((res) => {
+          setEmail(res.data.email);
+          setLoggedIn(true);
+        })
+        .catch((error) => {
+          if (error === 'Bad Request') {
+            console.error('400 - Token not provided or provided in the wrong format', error);
+          } else if (error === 'Unauthorized') {
+            console.error('401 - The provided token is invalid', error);
+          } else {
+            console.error('500 - an error occured', error);
+          }
+        })
+        .finally(() => {
+          setIsInfoTooltipOpen(true);
+          // history.push('/');
+        })
+    } else {
+      setLoggedIn(false);
+    }
   }, [token]);
 
   const handleEditAvatarClick = () => {
@@ -114,11 +137,12 @@ function App() {
 
   const handleLogin = ({ email, password }) => {
     auth.login({ email, password })
-      .then((res) => {
-        if (res.token) {
+      .then((data) => {
+        if (data && data.token) {
+          setToken(data.token);
           setLoggedIn(true);
-          setEmail(res.email);
-          setToken(res.token);
+          setEmail(data.email);
+          localStorage.setItem('token', data.token);
         } else {
           setLoggedIn(false);
         }
@@ -136,31 +160,6 @@ function App() {
       })
       .finally(() => history.push('/'))
   }
-
-  useEffect(() => {
-    if (token) {
-      auth.getContent(token)
-        .then((res) => {
-          setEmail(res.data.email);
-          setLoggedIn(true);
-        })
-        .catch((error) => {
-          if (error === 'Bad Request') {
-            console.error('400 - Token not provided or provided in the wrong format', error);
-          } else if (error === 'Unauthorized') {
-            console.error('401 - The provided token is invalid', error);
-          } else {
-            console.error('500 - an error occured', error);
-          }
-        })
-        .finally(() => {
-          setIsInfoTooltipOpen(true);
-          history.push('/');
-        })
-    } else {
-      setLoggedIn(false);
-    }
-  }, [history, token]);
 
   const handleLogout = () => {
     setEmail('')
