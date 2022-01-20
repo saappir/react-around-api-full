@@ -39,16 +39,16 @@ function App() {
   //   tokenCheck();
   // });
 
-  React.useEffect(() => {
-    if (token) {
-      api.getUserinfo()
-        .then(setUserState)
-        .catch(error => console.error('user info error', error));
-      api.getInitialCards()
-        .then(setCardsArray)
-        .catch(error => console.error('initial cards error', error));
-    }
-  }, [token]);
+  // React.useEffect(() => {
+  //   if (token) {
+  //     api.getUserinfo()
+  //       .then(setUserState)
+  //       .catch(error => console.error('user info error', error));
+  //     api.getInitialCards()
+  //       .then(setCardsArray)
+  //       .catch(error => console.error('initial cards error', error));
+  //   }
+  // }, [token]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
