@@ -35,20 +35,22 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // React.useEffect(() => {
-  //   tokenCheck();
-  // });
+  React.useEffect(() => {
+    tokenCheck();
+  }, [token]);
 
-  // React.useEffect(() => {
-  //   if (token) {
-  //     api.getUserinfo()
-  //       .then(setUserState)
-  //       .catch(error => console.error('user info error', error));
-  //     api.getInitialCards()
-  //       .then(setCardsArray)
-  //       .catch(error => console.error('initial cards error', error));
-  //   }
-  // }, [token]);
+  React.useEffect(() => {
+    api.getUserinfo(token)
+      .then((res) => { setUserState(res.data) })
+      .catch(error => console.error('user info error', error));
+    api.getInitialCards(token)
+      .then((res) => {
+        if (res.data) {
+          setCardsArray(res.data)
+        }
+      })
+      .catch(error => console.error('initial cards error', error));
+  }, [token]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -138,11 +140,9 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          if (res) {
-            setEmail(res.data.email)
-            setLoggedIn(true)
-            history.push('/');
-          }
+          setEmail(res.data.email)
+          setLoggedIn(true)
+          history.push('/');
         })
         .catch((error) => {
           if (error === 'Bad Request') {
@@ -153,6 +153,8 @@ function App() {
             console.error('500 - an error occured', error)
           }
         })
+    } else {
+      setLoggedIn(false)
     }
   }
 
