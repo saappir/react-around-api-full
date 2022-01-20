@@ -33,6 +33,7 @@ function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const history = useHistory();
+  const token = localStorage.getItem('token')
 
   React.useEffect(() => {
     tokenCheck();
@@ -40,7 +41,6 @@ function App() {
   }, [history]);
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token')
     if (token) {
       api.getUserinfo()
         .then(setUserState)
@@ -49,7 +49,7 @@ function App() {
         .then(setCardsArray)
         .catch(error => console.error('initial cards error', error));
     }
-  }, [loggedIn]);
+  }, [token]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
