@@ -115,22 +115,22 @@ function App() {
     auth.login({ email, password })
       .then((res) => {
         if (res.token) {
-          setLoggedIn(true)
-          setEmail(res.email)
+          setLoggedIn(true);
+          setEmail(res.email);
+          setToken(res.token)
         } else {
-          setLoggedIn(false)
+          setLoggedIn(false);
         }
-        tokenCheck();
       })
       .catch((error) => {
-        setMessage(false)
-        setIsInfoTooltipOpen(true)
+        setMessage(false);
+        setIsInfoTooltipOpen(true);
         if (error === 'Bad Request') {
-          console.error('400 - one or more of the fields were not provided', error)
+          console.error('400 - one or more of the fields were not provided', error);
         } else if (error === 'Unauthorized') {
-          console.error('401 - the user with the specified email not found', error)
+          console.error('401 - the user with the specified email not found', error);
         } else {
-          console.error('500 - an error occured', error)
+          console.error('500 - an error occured', error);
         }
       })
       .finally(() => history.push('/'))
@@ -194,19 +194,16 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-
         <Switch>
           <Route path='/signup'>
             <Header loggedIn={loggedIn} linkPath='/signin' linkTitle='Log in' />
             <Register onRegister={handleRegister} />
             <InfoTooltip loggedIn={loggedIn} onClose={closeAllPopups} isOpen={isInfoTooltipOpen} message={message} />
-
           </Route>
           <Route path='/signin'>
             <Header loggedIn={loggedIn} linkPath='/signup' linkTitle='Sign up' />
             <Login onLogin={handleLogin} />
             <InfoTooltip loggedIn={loggedIn} onClose={closeAllPopups} isOpen={isInfoTooltipOpen} message={message} />
-
           </Route>
           <ProtectedRoute loggedIn={loggedIn} exact path='/' >
             <Header loggedIn={loggedIn} onLogout={handleLogout} email={email} linkPath='/signup' linkTitle='Log out' />
