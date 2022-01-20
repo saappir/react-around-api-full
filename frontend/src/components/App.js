@@ -33,12 +33,11 @@ function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const history = useHistory();
-  const token = localStorage.getItem('token')
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
   React.useEffect(() => {
     tokenCheck();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history]);
+  });
 
   React.useEffect(() => {
     if (token) {
@@ -136,7 +135,6 @@ function App() {
   }
 
   const tokenCheck = () => {
-    const token = localStorage.getItem('token');
     if (token) {
       auth.getContent(token)
         .then((res) => {
@@ -162,7 +160,8 @@ function App() {
     setEmail('')
     setLoggedIn(false);
     history.push('/');
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    setToken('');
   }
 
   function handleCardLike(card) {
