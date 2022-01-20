@@ -8,19 +8,19 @@ class Api {
     fetch(baseUrl, headers)
       .then(res => res.ok ? res.json() : Promise.reject(res.statusText))
 
-  getInitialCards() {
+  getInitialCards(token) {
     return this._customFetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
   }
 
-  getUserinfo() {
+  getUserinfo(token) {
     return this._customFetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
   }
 
-  updateUserInfo(data) {
+  updateUserInfo(data, token) {
     return this._customFetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
@@ -31,7 +31,7 @@ class Api {
     })
   }
 
-  createCard(data) {
+  createCard(data, token) {
     return this._customFetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       method: 'POST',
@@ -39,17 +39,17 @@ class Api {
     })
   }
 
-  deleteCard(cardId) {
+  deleteCard(cardId, token) {
     return this._customFetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'
     })
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
+  changeLikeCardStatus(cardId, isLiked, token) {
     return this._customFetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       headers: this._headers,
-      method: isLiked ? 'PUT' : 'DELETE'
+      method: isLiked ? 'DELETE' : 'PUT'
     })
   }
 
@@ -63,7 +63,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.saappir.students.nomoreparties.sbs',
+  baseUrl: 'http://localhost:3000',
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json',

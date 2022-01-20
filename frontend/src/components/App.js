@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch, Route, useHistory } from 'react-router-dom';
 import '../index.css';
 import Header from "./Header.js";
@@ -35,11 +35,11 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  React.useEffect(() => {
+  useEffect(() => {
     tokenCheck();
   }, [token]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     api.getUserinfo(token)
       .then((res) => { setUserState(res.data) })
       .catch(error => console.error('user info error', error));
