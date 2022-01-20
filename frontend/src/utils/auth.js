@@ -3,14 +3,14 @@ export const BASE_URL = 'http://localhost:3000';
 
 export const resHandler = (res) => res.ok ? res.json() : Promise.reject(res.statusText);
 
-export const register = ({ email, password }) => {
+export const register = ({ name, about, avatar, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ name, about, avatar, email, password }),
   })
     .then((res) => resHandler(res))
 };

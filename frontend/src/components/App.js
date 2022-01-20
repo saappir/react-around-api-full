@@ -94,20 +94,21 @@ function App() {
 
   const handleRegister = ({ email, password }) => {
     auth.register({ email, password })
-      .then(() => {
-        setMessage(true)
+      .then((res) => {
+        setMessage(true);
+        return res;
       })
       .catch((error) => {
-        setMessage(false)
+        setMessage(false);
         if (error === 'Bad Request') {
-          console.error('400 - one of the fields was filled in incorrectly', error)
+          console.error('400 - one of the fields was filled in incorrectly', error);
         } else {
-          console.error('500 - an error occured', error)
+          console.error('500 - an error occured', error);
         }
       })
       .finally(() => {
-        setIsInfoTooltipOpen(true)
-        history.push('/')
+        setIsInfoTooltipOpen(true);
+        history.push('/');
       })
   }
 
@@ -117,7 +118,7 @@ function App() {
         if (res.token) {
           setLoggedIn(true);
           setEmail(res.email);
-          setToken(res.token)
+          setToken(res.token);
         } else {
           setLoggedIn(false);
         }
@@ -140,21 +141,21 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          setEmail(res.data.email)
-          setLoggedIn(true)
+          setEmail(res.data.email);
+          setLoggedIn(true);
           history.push('/');
         })
         .catch((error) => {
           if (error === 'Bad Request') {
-            console.error('400 - Token not provided or provided in the wrong format', error)
+            console.error('400 - Token not provided or provided in the wrong format', error);
           } else if (error === 'Unauthorized') {
-            console.error('401 - The provided token is invalid', error)
+            console.error('401 - The provided token is invalid', error);
           } else {
-            console.error('500 - an error occured', error)
+            console.error('500 - an error occured', error);
           }
         })
     } else {
-      setLoggedIn(false)
+      setLoggedIn(false);
     }
   }
 
