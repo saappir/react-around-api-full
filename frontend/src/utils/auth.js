@@ -1,16 +1,16 @@
 
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.saappir.students.nomoreparties.sbs';
 
 export const resHandler = (res) => res.ok ? res.json() : Promise.reject(res.statusText);
 
-export const register = ({ name, about, avatar, email, password }) => {
+export const register = ({ email, password }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ name, about, avatar, email, password }),
+    body: JSON.stringify({ email, password }),
   })
     .then((res) => resHandler(res))
 };
@@ -40,6 +40,7 @@ export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
+      Acccept: 'application/json',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     }
