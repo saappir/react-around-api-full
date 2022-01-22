@@ -66,10 +66,6 @@ function App() {
             console.error('500 - an error occured', error);
           }
         })
-        .finally(() => {
-          setIsInfoTooltipOpen(true);
-          // history.push('/');
-        })
     } else {
       setLoggedIn(false);
     }

@@ -30,20 +30,12 @@ module.exports.createUser = (req, res) => {
   const {
     email, password, name, about, avatar,
   } = req.body;
-  bcrypt.hash(password, 10)
+  bcrypt
+    .hash(password, 10)
     .then((hash) => User.create({
       email, password: hash, name, about, avatar,
     }))
-    .then((user) => res.status(201)
-      .send({
-        data: {
-          _id: user._id,
-          email: user.email,
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-        },
-      }))
+    .then((user) => res.status(201).send({ _id: user._id }))
     .catch((err) => { errorHandler(err, res); });
 };
 
@@ -83,6 +75,7 @@ module.exports.login = (req, res) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
+      res.header('authorization', `Bearer ${token}`);
     })
     .catch((err) => {
       res.status(401).send({ message: err.message });
