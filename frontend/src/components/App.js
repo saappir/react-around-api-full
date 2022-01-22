@@ -58,6 +58,7 @@ function App() {
         .then((res) => {
           setEmail(res.data.email);
           setLoggedIn(true);
+          history.push('/');
         })
         .catch((error) => {
           if (error === 'Bad Request') {
@@ -71,7 +72,7 @@ function App() {
     } else {
       setLoggedIn(false);
     }
-  }, [token]);
+  }, [history, token]);
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -114,6 +115,9 @@ function App() {
   }
 
   const handleRegister = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
     auth.register({ email, password })
       .then((res) => {
         setMessage(true);
@@ -134,12 +138,15 @@ function App() {
   }
 
   const handleLogin = ({ email, password }) => {
+    if (!email || !password) {
+      return;
+    }
     auth.login({ email, password })
       .then((data) => {
-        if (data && data.token) {
+        if (data.token) {
           setToken(data.token);
           setLoggedIn(true);
-          setEmail(data.email);
+          setEmail(email);
           localStorage.setItem('token', data.token);
         } else {
           setLoggedIn(false);

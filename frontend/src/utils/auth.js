@@ -12,7 +12,7 @@ export const register = ({ email, password }) => {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((res) => resHandler(res))
+    .then((res) => { return resHandler(res) })
 };
 
 export const login = ({ email, password }) => {
@@ -24,7 +24,7 @@ export const login = ({ email, password }) => {
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((res) => resHandler(res))
+    .then((res) => { return resHandler(res) })
     .then((data) => {
       if (data.token) {
         localStorage.setItem('token', data.token);
@@ -45,6 +45,6 @@ export const getContent = (token) => {
       "Authorization": `Bearer ${token}`
     }
   })
-    .then(res => resHandler(res))
+    .then((res) => { return resHandler(res) })
     .then((data) => data)
 }
