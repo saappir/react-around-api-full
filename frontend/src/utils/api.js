@@ -63,7 +63,10 @@ class Api {
 
   changeLikeCardStatus(cardId, isLiked, token) {
     return this._customFetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       method: isLiked ? 'DELETE' : 'PUT'
     })
   }

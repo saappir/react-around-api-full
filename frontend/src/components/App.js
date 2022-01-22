@@ -35,6 +35,8 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
+  console.log('token', token);
+
   useEffect(() => {
     api.getUserinfo(token)
       .then((res) => {
@@ -88,22 +90,22 @@ function App() {
     setIsImagePopupOpen(true);
   };
 
-  const handleUpdateUser = (data) => {
-    api.updateUserInfo(data)
+  const handleUpdateUser = (data, token) => {
+    api.updateUserInfo(data, token)
       .then(setUserState)
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
-  const handleUpdateAvatar = (data) => {
-    api.setUserAvatar(data)
+  const handleUpdateAvatar = (data, token) => {
+    api.setUserAvatar(data, token)
       .then(setUserState)
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
 
-  const handleAddPlace = (data) => {
-    api.createCard(data)
+  const handleAddPlace = (data, token) => {
+    api.createCard(data, token)
       .then((newCard) => {
         setCardsArray([newCard, ...cards])
       })
@@ -165,17 +167,17 @@ function App() {
     setToken('');
   }
 
-  function handleCardLike(card) {
+  function handleCardLike(card, token) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked)
+    api.changeLikeCardStatus(card._id, !isLiked, token)
       .then((newCard) => {
         setCardsArray((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
       .catch(error => console.error('like card error', error))
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
+  function handleCardDelete(card, token) {
+    api.deleteCard(card._id, token)
       .then(() => {
         setCardsArray(cards.filter(((c) => c._id !== card._id)))
       })
