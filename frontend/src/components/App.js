@@ -38,18 +38,20 @@ function App() {
   console.log('token', token);
 
   useEffect(() => {
-    api.getUserinfo(token)
-      .then((res) => {
-        setUserState(res.data);
-        api.getInitialCards(token)
-          .then((res) => {
-            if (res.data) {
-              setCardsArray(res.data)
-            }
-          })
-          .catch(error => console.error('initial cards error', error));
-      })
-      .catch(error => console.error('user info error', error));
+    if (token) {
+      api.getUserinfo(token)
+        .then((res) => {
+          setUserState(res.data);
+          api.getInitialCards(token)
+            .then((res) => {
+              if (res.data) {
+                setCardsArray(res.data)
+              }
+            })
+            .catch(error => console.error('initial cards error', error));
+        })
+        .catch(error => console.error('user info error', error));
+    }
   }, [token]);
 
   useEffect(() => {
@@ -91,21 +93,21 @@ function App() {
     setIsImagePopupOpen(true);
   };
 
-  const handleUpdateUser = (data, token) => {
+  const handleUpdateUser = (data) => {
     api.updateUserInfo(data, token)
       .then(setUserState)
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
-  const handleUpdateAvatar = (data, token) => {
+  const handleUpdateAvatar = (data) => {
     api.setUserAvatar(data, token)
       .then(setUserState)
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
 
-  const handleAddPlace = (data, token) => {
+  const handleAddPlace = (data) => {
     api.createCard(data, token)
       .then((newCard) => {
         setCardsArray([newCard, ...cards])
@@ -174,7 +176,7 @@ function App() {
     setToken('');
   }
 
-  function handleCardLike(card, token) {
+  function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked, token)
       .then((newCard) => {
@@ -183,7 +185,7 @@ function App() {
       .catch(error => console.error('like card error', error))
   }
 
-  function handleCardDelete(card, token) {
+  function handleCardDelete(card) {
     api.deleteCard(card._id, token)
       .then(() => {
         setCardsArray(cards.filter(((c) => c._id !== card._id)))
