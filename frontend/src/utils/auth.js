@@ -3,7 +3,7 @@ export const BASE_URL = 'https://api.saappir.students.nomoreparties.sbs';
 
 export const resHandler = (res) => res.ok ? res.json() : Promise.reject(res.statusText);
 
-export const register = ({ email, password }) => {
+export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
@@ -15,7 +15,7 @@ export const register = ({ email, password }) => {
     .then((res) => { return resHandler(res) })
 };
 
-export const login = ({ email, password }) => {
+export const login = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
@@ -40,10 +40,9 @@ export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
-      Acccept: 'application/json',
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
-    }
+    },
   })
     .then((res) => { return resHandler(res) })
     .then((data) => data)

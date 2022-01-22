@@ -35,24 +35,27 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  console.log('token', token);
-
   useEffect(() => {
     if (token) {
       api.getUserinfo(token)
         .then((res) => {
           setUserState(res.data);
-          api.getInitialCards(token)
-            .then((res) => {
-              if (res.data) {
-                setCardsArray(res.data)
-              }
-            })
-            .catch(error => console.error('initial cards error', error));
         })
         .catch(error => console.error('user info error', error));
     }
   }, [token]);
+
+  useEffect(() => {
+    if (token) {
+      api.getInitialCards(token)
+        .then((res) => {
+          if (res.data) {
+            setCardsArray(res.data)
+          }
+        })
+        .catch(error => console.error('initial cards error', error));
+    }
+  }, [token])
 
   useEffect(() => {
     if (token) {
@@ -71,8 +74,6 @@ function App() {
             console.error('500 - an error occured', error);
           }
         })
-    } else {
-      setLoggedIn(false);
     }
   }, [history, token]);
 
@@ -95,14 +96,14 @@ function App() {
 
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data, token)
-      .then(setUserState)
+      .then((res) => { setUserState(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
   const handleUpdateAvatar = (data) => {
     api.setUserAvatar(data, token)
-      .then(setUserState)
+      .then((res) => { setUserState(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
@@ -116,11 +117,11 @@ function App() {
       .catch(error => console.error('add place error', error))
   }
 
-  const handleRegister = ({ email, password }) => {
+  const handleRegister = (email, password) => {
     if (!email || !password) {
       return;
     }
-    auth.register({ email, password })
+    auth.register(email, password)
       .then((res) => {
         setMessage(true);
         return res;
@@ -139,19 +140,17 @@ function App() {
       })
   }
 
-  const handleLogin = ({ email, password }) => {
+  const handleLogin = (email, password) => {
     if (!email || !password) {
       return;
     }
-    auth.login({ email, password })
+    auth.login(email, password)
       .then((data) => {
         if (data.token) {
           setToken(data.token);
           setLoggedIn(true);
           setEmail(email);
           localStorage.setItem('token', data.token);
-        } else {
-          setLoggedIn(false);
         }
       })
       .catch((error) => {

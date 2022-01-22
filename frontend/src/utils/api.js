@@ -16,6 +16,7 @@ class Api {
       },
     })
       .then(this._resHandler)
+      .then((data) => data)
   }
 
   getUserinfo(token) {
@@ -26,6 +27,7 @@ class Api {
       }
     })
       .then(this._resHandler)
+      .then((data) => data)
   }
 
   updateUserInfo(data, token) {
@@ -52,6 +54,7 @@ class Api {
       body: JSON.stringify(data)
     })
       .then(this._resHandler)
+      .then((data) => data)
   }
 
   deleteCard(cardId, token) {
@@ -86,6 +89,7 @@ class Api {
       body: JSON.stringify({ avatar })
     })
       .then(this._resHandler)
+      .then((data) => data)
   }
 }
 
