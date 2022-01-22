@@ -10,19 +10,28 @@ class Api {
 
   getInitialCards(token) {
     return this._customFetch(`${this._baseUrl}/cards`, {
-      headers: this._headers
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
     })
   }
 
   getUserinfo(token) {
     return this._customFetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
     })
   }
 
   updateUserInfo(data, token) {
     return this._customFetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'PATCH',
       body: JSON.stringify({
         name: data.name,
@@ -33,7 +42,10 @@ class Api {
 
   createCard(data, token) {
     return this._customFetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'POST',
       body: JSON.stringify(data)
     })
@@ -41,7 +53,10 @@ class Api {
 
   deleteCard(cardId, token) {
     return this._customFetch(`${this._baseUrl}/cards/${cardId}`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'DELETE'
     })
   }
@@ -53,9 +68,12 @@ class Api {
     })
   }
 
-  setUserAvatar({ avatar }) {
+  setUserAvatar({ avatar, token }) {
     return this._customFetch(`${this._baseUrl}/users/me/avatar`, {
-      headers: this._headers,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
       method: 'PATCH',
       body: JSON.stringify({ avatar })
     })
@@ -63,11 +81,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.saappir.students.nomoreparties.sbs',
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-    'Content-Type': 'application/json',
-  }
+  baseUrl: 'http://localhost:3000',
 });
 
 export default api;

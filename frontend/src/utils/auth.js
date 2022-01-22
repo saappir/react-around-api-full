@@ -1,5 +1,5 @@
 
-export const BASE_URL = 'https://api.saappir.students.nomoreparties.sbs';
+export const BASE_URL = 'http://localhost:3000';
 
 export const resHandler = (res) => res.ok ? res.json() : Promise.reject(res.statusText);
 
