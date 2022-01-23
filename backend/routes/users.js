@@ -39,6 +39,11 @@ usersRouter.patch(
 usersRouter.patch(
   '/me/avatar',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(true),
     body: Joi.object().keys({
       avatar: Joi.string().required().custom(validateUrl),
     }),

@@ -11,6 +11,11 @@ cardsRouter.get('/', getCards);
 cardsRouter.post(
   '/',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(true),
     body: Joi.object().keys({
       name: Joi.string().required().min(1).max(30),
       link: Joi.string().required().custom(validateUrl),
@@ -22,6 +27,10 @@ cardsRouter.post(
 cardsRouter.delete(
   '/:cardId',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      }),
     params: Joi.object().keys({
       cardId: Joi.string().hex().length(24),
     }),
@@ -32,6 +41,10 @@ cardsRouter.delete(
 cardsRouter.put(
   '/:cardId/likes',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      }),
     params: Joi.object().keys({
       cardId: Joi.string().hex().length(24),
     }),
@@ -42,6 +55,10 @@ cardsRouter.put(
 cardsRouter.delete(
   '/:cardId/likes',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      }),
     params: Joi.object().keys({
       cardId: Joi.string().hex().length(24),
     }),
