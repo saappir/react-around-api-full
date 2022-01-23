@@ -13,7 +13,7 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.getUserById = (req, res) => {
-  const { userId } = req.params;
+  const userId = req.params._id;
   User.findById(userId)
     .orFail(() => {
       const error = new Error('No user found with that id');
@@ -21,7 +21,7 @@ module.exports.getUserById = (req, res) => {
       throw error;
     })
     .then((user) => {
-      res.status(200).send({ data: user });
+      res.status(200).send(user);
     })
     .catch((err) => { errorHandler(err, res); });
 };
@@ -35,7 +35,13 @@ module.exports.createUser = (req, res) => {
     .then((hash) => User.create({
       email, password: hash, name, about, avatar,
     }))
-    .then((user) => res.status(201).send({ _id: user._id }))
+    .then((user) => res.status(201).send({
+      _id: user._id,
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    }))
     .catch((err) => { errorHandler(err, res); });
 };
 
