@@ -40,7 +40,6 @@ function App() {
     if (token) {
       api.getUserinfo(token)
         .then((res) => {
-          console.log(res);
           setUserState(res.data);
         })
         .catch(error => console.error('user info error', error));
@@ -149,6 +148,8 @@ function App() {
     auth.login({ email, password })
       .then((data) => {
         if (data.token) {
+          setUserState(data)
+          console.log(data)
           setToken(data.token);
           setLoggedIn(true);
           setEmail(email);

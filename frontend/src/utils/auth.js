@@ -45,5 +45,5 @@ export const getContent = (token) => {
     },
   })
     .then((res) => { return resHandler(res) })
-    .then((data) => data)
+    .then(data => data)
 }

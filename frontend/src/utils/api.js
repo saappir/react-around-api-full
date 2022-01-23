@@ -27,7 +27,6 @@ class Api {
       }
     })
       .then(this._resHandler)
-      .then((data) => data)
   }
 
   updateUserInfo(data, token) {
