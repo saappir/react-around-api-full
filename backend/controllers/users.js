@@ -13,7 +13,7 @@ module.exports.getUsers = (req, res) => {
 };
 
 module.exports.getUserById = (req, res) => {
-  const userId = req.params._id;
+  const userId = req.user._id;
   User.findById(userId)
     .orFail(() => {
       const error = new Error('No user found with that id');
@@ -21,19 +21,19 @@ module.exports.getUserById = (req, res) => {
       throw error;
     })
     .then((user) => {
-      res.status(200).send(user);
+      if (user) {
+        res.status(200).send({ data: user });
+      }
     })
     .catch((err) => { errorHandler(err, res); });
 };
 
 module.exports.createUser = (req, res) => {
-  const {
-    email, password, name, about, avatar,
-  } = req.body;
+  const { email, password } = req.body;
   bcrypt
     .hash(password, 10)
     .then((hash) => User.create({
-      email, password: hash, name, about, avatar,
+      email, password: hash,
     }))
     .then((user) => res.status(201).send({
       _id: user._id,

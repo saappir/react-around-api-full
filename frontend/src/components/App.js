@@ -26,7 +26,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
 
-  const [currentUser, setUserState] = useState({});
+  const [currentUser, setCurrentUser] = useState({});
   const [cards, setCardsArray] = useState([]);
 
   const [loggedIn, setLoggedIn] = useState(false);
@@ -36,12 +36,11 @@ function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   console.log(currentUser)
+
   useEffect(() => {
     if (token) {
       api.getUserinfo(token)
-        .then((res) => {
-          setUserState(res.user);
-        })
+        .then((res) => { setCurrentUser(res.data) })
         .catch(error => console.error('user info error', error));
     }
   }, [token]);
@@ -50,9 +49,7 @@ function App() {
     if (token) {
       api.getInitialCards(token)
         .then((res) => {
-          if (res.data) {
-            setCardsArray(res.data)
-          }
+          setCardsArray(res.data)
         })
         .catch(error => console.error('initial cards error', error));
     }
@@ -62,7 +59,7 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          setEmail(res.data.email);
+          setEmail(res.user.email);
           setLoggedIn(true);
           history.push('/');
         })
@@ -97,14 +94,14 @@ function App() {
 
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data, token)
-      .then((res) => { setUserState(res.data) })
+      .then((res) => { setCurrentUser(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
   const handleUpdateAvatar = (data) => {
     api.setUserAvatar(data, token)
-      .then((res) => { setUserState(res.data) })
+      .then((res) => { setCurrentUser(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
@@ -148,7 +145,6 @@ function App() {
     auth.login({ email, password })
       .then((data) => {
         if (data.token) {
-          setUserState(data)
           setToken(data.token);
           setLoggedIn(true);
           setEmail(email);

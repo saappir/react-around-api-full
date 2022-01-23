@@ -22,11 +22,6 @@ function Login(props) {
     onLogin({ email, password });
   }
 
-  // React.useEffect(() => {
-  //   setEmail('');
-  //   setPassword('');
-  // }, [])
-
   return (
     <HomepageForm
       title='Log in'

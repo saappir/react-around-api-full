@@ -11,19 +11,11 @@ usersRouter.get('/', getUsers);
 usersRouter.get(
   '/me',
   celebrate({
-    headers: Joi.object().keys({
-      authorization: Joi.string().required(),
-    }).unknown(true),
-  }),
-  getUserById,
-);
-
-usersRouter.get(
-  '/:userId',
-  celebrate({
-    params: Joi.object().keys({
-      _id: Joi.string().required().hex().length(24),
-    }),
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(true),
   }),
   getUserById,
 );
@@ -31,6 +23,11 @@ usersRouter.get(
 usersRouter.patch(
   '/me',
   celebrate({
+    headers: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(true),
     body: Joi.object().keys({
       name: Joi.string().required().min(2).max(40),
       about: Joi.string().required().min(2).max(200),
