@@ -57,7 +57,7 @@ module.exports.updateProfile = (req, res) => {
       error.statusCode = 404;
       throw error;
     })
-    .then((user) => { res.status(200).send(user); })
+    .then((user) => { res.status(200).send({ data: user }); })
     .catch((err) => { errorHandler(err, res); });
 };
 
@@ -73,7 +73,7 @@ module.exports.updateAvatar = (req, res) => {
       error.statusCode = 404;
       throw error;
     })
-    .then((user) => { res.status(200).send(user); })
+    .then((user) => { res.status(200).send({ data: user }); })
     .catch((err) => { errorHandler(err, res); });
 };
 
@@ -83,7 +83,7 @@ module.exports.login = (req, res) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
-      res.send({ user });
+      res.send({ data: user });
       res.header('authorization', `Bearer ${token}`);
     })
     .catch((err) => {
