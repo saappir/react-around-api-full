@@ -35,6 +35,7 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
+  console.log(currentUser)
   useEffect(() => {
     if (token) {
       api.getUserinfo(token)
