@@ -40,7 +40,7 @@ function App() {
     if (token) {
       api.getUserinfo(token)
         .then((res) => {
-          setUserState(res.data);
+          setUserState(res.user);
         })
         .catch(error => console.error('user info error', error));
     }
