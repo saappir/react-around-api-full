@@ -73,8 +73,7 @@ function App() {
           } else {
             console.error('500 - an error occured', error);
           }
-        })
-    }
+        })}
   }, [history, token]);
 
   const handleEditAvatarClick = () => {
@@ -117,7 +116,7 @@ function App() {
       .catch(error => console.error('add place error', error))
   }
 
-  const handleRegister = (email, password) => {
+  const handleRegister = ({email, password}) => {
     if (!email || !password) {
       return;
     }
@@ -140,11 +139,11 @@ function App() {
       })
   }
 
-  const handleLogin = (email, password) => {
+  const handleLogin = ({email, password}) => {
     if (!email || !password) {
       return;
     }
-    auth.login(email, password)
+    auth.login({email, password})
       .then((data) => {
         if (data.token) {
           setToken(data.token);

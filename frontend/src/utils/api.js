@@ -79,7 +79,7 @@ class Api {
       .then(this._resHandler)
   }
 
-  setUserAvatar({ avatar, token }) {
+  setUserAvatar({ avatar }, token) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: {
         Authorization: `Bearer ${token}`,
