@@ -48,9 +48,7 @@ function App() {
   useEffect(() => {
     if (token) {
       api.getInitialCards(token)
-        .then((res) => {
-          setCardsArray(res.data)
-        })
+        .then((res) => setCardsArray)
         .catch(error => console.error('initial cards error', error));
     }
   }, [token])
@@ -59,7 +57,7 @@ function App() {
     if (token) {
       auth.getContent(token)
         .then((res) => {
-          setEmail(res.email);
+          setEmail(res.user.email);
           setLoggedIn(true);
           history.push('/');
         })
@@ -94,14 +92,14 @@ function App() {
 
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data, token)
-      .then((res) => { setCurrentUser(res.data) })
+      .then((res) => { setCurrentUser(res) })
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
   const handleUpdateAvatar = (data) => {
     api.setUserAvatar(data, token)
-      .then((res) => { setCurrentUser(res.data) })
+      .then((res) => { setCurrentUser(res) })
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
@@ -174,7 +172,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked, token)
       .then((newCard) => {
         setCardsArray((state) => state.map((c) => c._id === card._id ? newCard : c));
