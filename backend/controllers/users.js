@@ -22,7 +22,7 @@ module.exports.getUserById = (req, res) => {
     })
     .then((user) => {
       if (user) {
-        res.status(200).send({ user });
+        res.status(200).send({ data: user });
       }
     })
     .catch((err) => { errorHandler(err, res); });

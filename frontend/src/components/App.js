@@ -92,14 +92,14 @@ function App() {
 
   const handleUpdateUser = (data) => {
     api.updateUserInfo(data, token)
-      .then((res) => { setCurrentUser(res) })
+      .then((res) => { setCurrentUser(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update user error', error))
   }
 
   const handleUpdateAvatar = (data) => {
     api.setUserAvatar(data, token)
-      .then((res) => { setCurrentUser(res) })
+      .then((res) => { setCurrentUser(res.data) })
       .then(closeAllPopups)
       .catch(error => console.error('update avatar error', error))
   }
