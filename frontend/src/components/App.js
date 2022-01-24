@@ -35,8 +35,6 @@ function App() {
   const history = useHistory();
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  console.log(currentUser)
-
   useEffect(() => {
     if (token) {
       api.getUserinfo(token)
@@ -48,7 +46,9 @@ function App() {
   useEffect(() => {
     if (token) {
       api.getInitialCards(token)
-        .then((res) => setCardsArray)
+        .then((res) => {
+          setCardsArray(res.data)
+        })
         .catch(error => console.error('initial cards error', error));
     }
   }, [token])
@@ -107,7 +107,7 @@ function App() {
   const handleAddPlace = (data) => {
     api.createCard(data, token)
       .then((newCard) => {
-        setCardsArray([newCard, ...cards])
+        setCardsArray([newCard.data, ...cards])
       })
       .then(closeAllPopups)
       .catch(error => console.error('add place error', error))
@@ -173,7 +173,7 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, !isLiked, token)
+    api.changeLikeCardStatus(card._id, isLiked, token)
       .then((newCard) => {
         setCardsArray((state) => state.map((c) => c._id === card._id ? newCard : c));
       })
