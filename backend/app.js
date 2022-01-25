@@ -1,4 +1,5 @@
 const express = require('express');
+const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -80,6 +81,8 @@ app.use('/users', auth, usersRouter);
 app.use('/cards', auth, cardsRouter);
 
 app.use(errorLogger);
+app.use(errors());
+
 app.use('*', notFound);
 
 app.listen(PORT, () => {

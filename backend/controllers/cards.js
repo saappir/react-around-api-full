@@ -1,57 +1,59 @@
 const Card = require('../models/card');
-const errorHandler = require('../middleware/errorHandler');
+const NotFoundError = require('../middleware/errors/NotFoundError');
+const BadRequestError = require('../middleware/errors/BadRequestError');
 
-module.exports.getCards = (req, res) => {
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch((err) => { errorHandler(err, res); });
+    .catch(next);
 };
 
-module.exports.createCard = (req, res) => {
+module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   const owner = req.user._id;
   Card.create({ name, link, owner })
     .then((card) => res.status(201).send({ data: card }))
-    .catch((err) => { errorHandler(err, res); });
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        throw new BadRequestError('there is an empty field');
+      }
+    })
+    .catch(next);
 };
 
-module.exports.deleteCard = (req, res) => {
+module.exports.deleteCard = (req, res, next) => {
   Card.findByIdAndRemove(req.params.cardId)
     .orFail(() => {
-      const error = new Error('No card found with that id');
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError('No card found with that id');
     })
-    .then((cards) => res.status(200).send({ data: cards }))
-    .catch((err) => { errorHandler(err, res); });
+    .then((card) => {
+      res.status(200).send({ data: card });
+    })
+    .catch(next);
 };
 
-module.exports.likeCard = (req, res) => {
+module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
     .orFail(() => {
-      const error = new Error('No card found with that id');
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError('No card found with that id');
     })
     .then((card) => { res.status(200).send(card); })
-    .catch((err) => { errorHandler(err, res); });
+    .catch(next);
 };
 
-module.exports.dislikeCard = (req, res) => {
+module.exports.dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
   )
     .orFail(() => {
-      const error = new Error('No card found with that id');
-      error.statusCode = 404;
-      throw error;
+      throw new NotFoundError('No card found with that id');
     })
     .then((card) => { res.status(200).send(card); })
-    .catch((err) => { errorHandler(err, res); });
+    .catch(next);
 };
