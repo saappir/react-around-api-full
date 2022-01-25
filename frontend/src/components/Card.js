@@ -13,7 +13,7 @@ function Card(props) {
     `card__delete-button ${isOwn ? 'card__delete-button_state_visible' : 'card__delete-button_state_hidden'}`
   );
 
-  const isLiked = card.likes.includes((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some((i) => i === currentUser._id);
 
   const cardLikeButtonClassName = (
     `card__like-button ${isLiked && 'card__like-button_state_active'}`

@@ -1,6 +1,7 @@
 const Card = require('../models/card');
 const NotFoundError = require('../middleware/errors/NotFoundError');
 const BadRequestError = require('../middleware/errors/BadRequestError');
+const ForbiddenError = require('../middleware/errors/ForbiddenError');
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
@@ -22,12 +23,19 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  Card.findById(req.params.cardId)
     .orFail(() => {
       throw new NotFoundError('No card found with that id');
     })
-    .then((card) => {
-      res.status(200).send({ data: card });
+    .then((foundCard) => {
+      if (req.user._id === foundCard.owner) {
+        Card.findByIdAndRemove(req.params.cardId)
+          .then((card) => {
+            res.status(200).send({ data: card });
+          });
+      } else {
+        throw new ForbiddenError('You are not the owner of this card');
+      }
     })
     .catch(next);
 };
