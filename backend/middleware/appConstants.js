@@ -11,22 +11,4 @@ const limiter = rateLimit({
   message: 'rate limit reached',
 });
 
-const allowedOrigins = ['http://localhost:3000', 'https://api.saappir.students.nomoreparties.sbs', 'https://saappir.students.nomoreparties.sbs'];
-const corsConfig = (req, res, next) => {
-  const origin = req.headers;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader(
-    'Access-Control-Allow-Methdos',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-  );
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type',
-  );
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-};
-
-module.exports = { notFound, limiter, corsConfig };
+module.exports = { notFound, limiter };

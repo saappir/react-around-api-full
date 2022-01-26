@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const appRoutes = require('./routes/index');
 const mongoConfig = require('./middleware/mongoConfig');
-const { notFound, limiter, corsConfig } = require('./middleware/appConstants');
+const { notFound, limiter } = require('./middleware/appConstants');
 const ServerError = require('./middleware/errors/ServerError');
 
 require('dotenv').config();
@@ -23,7 +23,24 @@ app.use(express.json());
 
 app.use(helmet());
 app.use(limiter);
-app.use(corsConfig);
+
+app.use((req, res, next) => {
+  const allowedOrigins = ['http://localhost:3000', 'https://api.saappir.students.nomoreparties.sbs', 'https://saappir.students.nomoreparties.sbs'];
+  const origin = req.headers;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader(
+    'Access-Control-Allow-Methdos',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With,content-type',
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.use(requestLogger);
 app.use(appRoutes);
