@@ -4,6 +4,7 @@ const User = require('../models/user');
 const NotFoundError = require('../middleware/errors/NotFoundError');
 const BadRequestError = require('../middleware/errors/BadRequestError');
 const ConflictError = require('../middleware/errors/ConflictError');
+const AuthorizationError = require('../middleware/errors/AuthorizationError');
 
 require('dotenv').config();
 
@@ -40,10 +41,12 @@ module.exports.createUser = (req, res, next) => {
       email: user.email,
     }))
     .catch((err) => {
-      if (err.name === 'MongoServerError') {
+      if (err.code === 11000) {
         throw new ConflictError('request conflicts with the server');
       } else if (err.name === 'ValidationError') {
         throw new BadRequestError('all fields required');
+      } else {
+        next(err);
       }
     })
     .catch(next);
@@ -83,6 +86,9 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
       res.send({ token });
+    })
+    .catch(() => {
+      throw new AuthorizationError('Invalid email or password');
     })
     .catch(next);
 };

@@ -17,6 +17,8 @@ module.exports.createCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         throw new BadRequestError('there is an empty field');
+      } else {
+        next(err);
       }
     })
     .catch(next);
