@@ -32,7 +32,7 @@ module.exports.deleteCard = (req, res, next) => {
     .then((foundCard) => {
       console.log(req.user);
       console.log(foundCard);
-      if (req.user._id === foundCard.owner) {
+      if (req.user._id.toString() === foundCard.owner.toString()) {
         Card.findByIdAndRemove(req.params.cardId)
           .then((card) => {
             res.status(200).send({ data: card });
@@ -47,7 +47,7 @@ module.exports.deleteCard = (req, res, next) => {
 module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
+    { $addToSet: { likes: req.user._id.toString() } },
     { new: true },
   )
     .orFail(() => {
