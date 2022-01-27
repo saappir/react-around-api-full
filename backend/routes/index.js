@@ -6,6 +6,7 @@ const cardsRouter = require('./cards');
 const { login } = require('../controllers/users');
 const { createUser } = require('../controllers/users');
 const auth = require('../middleware/auth');
+require('dotenv').config();
 
 appRouter.post('/signup', celebrate({
   body: Joi.object().keys({
