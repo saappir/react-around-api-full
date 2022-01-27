@@ -31,7 +31,7 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .then((foundCard) => {
       console.log(req.user._id, foundCard.owner);
-      if (req.user._id === foundCard.owner) {
+      if (req.user._id === foundCard.owner.str) {
         Card.findByIdAndRemove(req.params.cardId)
           .then((card) => {
             res.status(200).send({ data: card });
