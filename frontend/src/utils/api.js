@@ -11,6 +11,8 @@ class Api {
   getInitialCards(token) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -21,6 +23,8 @@ class Api {
   getUserinfo(token) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       }
@@ -32,6 +36,8 @@ class Api {
   updateUserInfo(data, token) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -47,6 +53,7 @@ class Api {
   createCard(data, token) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
+        Accept: 'application/json',
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -59,6 +66,8 @@ class Api {
   deleteCard(cardId, token) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -70,6 +79,8 @@ class Api {
   changeLikeCardStatus(cardId, isLiked, token) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -81,6 +92,8 @@ class Api {
   setUserAvatar({ avatar }, token) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: {
+        Accept: 'application/json',
+
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -92,7 +105,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.saappir.students.nomoreparties.sbs',
+  baseUrl: 'http://localhost:3000',
 });
 
 export default api;

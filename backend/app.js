@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const helmet = require('helmet');
+
 const { requestLogger, errorLogger } = require('./middleware/logger');
-const appRoutes = require('./routes/index');
-const { notFound, limiter } = require('./middleware/appConstants');
-const ServerError = require('./middleware/errors/ServerError');
+const appRouter = require('./routes/index');
+const {
+  notFound, limiter, errorHandler, allowedOrigins,
+} = require('./middleware/appConstants');
 
 require('dotenv').config();
 
@@ -25,7 +27,6 @@ app.use(helmet());
 app.use(limiter);
 
 app.use((req, res, next) => {
-  const allowedOrigins = ['http://localhost:3000', 'https://api.saappir.students.nomoreparties.sbs', 'https://saappir.students.nomoreparties.sbs'];
   const origin = req.headers;
   if (allowedOrigins.includes(origin)) {
     res.setHeader('Access-Control-Allow-Origin', origin);
@@ -43,12 +44,9 @@ app.use((req, res, next) => {
 });
 
 app.use(requestLogger);
-app.use(appRoutes);
+app.use('/', appRouter);
 app.use('*', notFound);
-app.use((err, req, res, next) => {
-  throw new ServerError('Server error', err);
-});
-
+app.use(errorHandler);
 app.use(errorLogger);
 app.use(errors());
 

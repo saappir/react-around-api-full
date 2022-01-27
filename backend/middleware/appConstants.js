@@ -11,4 +11,19 @@ const limiter = rateLimit({
   message: 'rate limit reached',
 });
 
-module.exports = { notFound, limiter };
+const errorHandler = (err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res
+    .status(statusCode)
+    .send({
+      message: statusCode === 500
+        ? 'An error occurred on the server'
+        : message,
+    });
+};
+
+const allowedOrigins = ['http://localhost:3000', 'https://api.saappir.students.nomoreparties.sbs', 'https://saappir.students.nomoreparties.sbs'];
+
+module.exports = {
+  notFound, limiter, errorHandler, allowedOrigins,
+};
