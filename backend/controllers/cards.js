@@ -30,6 +30,7 @@ module.exports.deleteCard = (req, res, next) => {
       throw new NotFoundError('No card found with that id');
     })
     .then((foundCard) => {
+      console.log(req.user._id, foundCard.owner);
       if (req.user._id === foundCard.owner) {
         Card.findByIdAndRemove(req.params.cardId)
           .then((card) => {
