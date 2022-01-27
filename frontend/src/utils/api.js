@@ -12,7 +12,6 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -24,7 +23,6 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       }
@@ -37,7 +35,6 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -67,7 +64,6 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -80,7 +76,6 @@ class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
@@ -93,7 +88,6 @@ class Api {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: {
         Accept: 'application/json',
-
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },

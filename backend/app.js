@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.use(requestLogger);
-app.use('/', appRouter);
+app.use(appRouter);
 app.use('*', notFound);
 app.use(errorHandler);
 app.use(errorLogger);
