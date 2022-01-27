@@ -1,6 +1,5 @@
-const express = require('express');
+const appRouter = require('express').Router();
 
-const appRouter = express.Router();
 const { celebrate, Joi } = require('celebrate');
 const usersRouter = require('./users');
 const cardsRouter = require('./cards');
@@ -22,8 +21,8 @@ appRouter.post('/signin', celebrate({
   }),
 }), login);
 
-appRouter.get('/users', auth, usersRouter);
-appRouter.get('/cards', auth, cardsRouter);
+appRouter.use('/users', auth, usersRouter);
+appRouter.use('/cards', auth, cardsRouter);
 
 appRouter.get('/crash-test', () => {
   setTimeout(() => {
