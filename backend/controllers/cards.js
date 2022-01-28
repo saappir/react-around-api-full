@@ -1,3 +1,4 @@
+const mongodb = require('mongodb');
 const Card = require('../models/card');
 const NotFoundError = require('../middleware/errors/NotFoundError');
 const BadRequestError = require('../middleware/errors/BadRequestError');
@@ -25,18 +26,23 @@ module.exports.createCard = (req, res, next) => {
 };
 
 module.exports.deleteCard = (req, res, next) => {
-  Card.findById(req.params.cardId)
+  const { cardId } = req.params;
+  Card.findById(cardId)
     .orFail(() => {
       throw new NotFoundError('No card found with that id');
     })
     .then((foundCard) => {
-      if (req.user._id.toString() === foundCard.owner.toString()) {
+      const userId = req.user._id.toString();
+      const ownerId = foundCard.owner.toString();
+      if (userId === ownerId) {
         Card.findByIdAndRemove(req.params.cardId)
           .then((card) => {
             res.status(200).send({ data: card });
           });
-      } else {
+      } else if (userId !== ownerId) {
         throw new ForbiddenError('You are not the owner of this card');
+      } else if (!mongodb.ObjectId.isValid(cardId)) {
+        throw new BadRequestError('Invalid card id');
       }
     })
     .catch(next);
@@ -52,6 +58,13 @@ module.exports.likeCard = (req, res, next) => {
       throw new NotFoundError('No card found with that id');
     })
     .then((card) => { res.status(200).send(card); })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Invalid card id');
+      } else {
+        next(err);
+      }
+    })
     .catch(next);
 };
 
@@ -65,5 +78,12 @@ module.exports.dislikeCard = (req, res, next) => {
       throw new NotFoundError('No card found with that id');
     })
     .then((card) => { res.status(200).send(card); })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Invalid card id');
+      } else {
+        next(err);
+      }
+    })
     .catch(next);
 };
